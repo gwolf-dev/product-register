@@ -1,28 +1,35 @@
-const { getToken, decodeToken } = require('../helpers/authService');
+const jwt = require('jsonwebtoken');
 
-const verifyToken = async (request, response, next) => {
+const { getToken } = require('../helpers/authService');
+
+const { SECRET_JWT } = process.env;
+
+const verifyToken = (request, response, next) => {
   const { authorization } = request.headers;
 
   if (authorization) {
-    const token = getToken(request);
+    try {
+      const token = getToken(request);
+      jwt.verify(token, SECRET_JWT);
+    } catch (error) {
+      console.error(error);
 
-    if (!token)
-      return response.status(403).json({
-        message: 'Acesso negado! Realize a autenticação de maneira correta.',
-      });
+      if (error.message === 'jwt expired')
+        return response.status(401).json({
+          message: 'Esse token foi expirado.',
+        });
 
-    const tokenDecoded = await decodeToken(token);
-    if (!tokenDecoded)
-      response.status(401).json({
+      return response.status(401).json({
         message: 'Token inválido ao decodifica-lo.',
       });
-
-    next();
+    }
   } else {
-    response.status(403).json({
+    return response.status(401).json({
       message: 'Por favor insira o token no cabeçalho da requisição.',
     });
   }
+
+  next();
 };
 
 module.exports = verifyToken;
