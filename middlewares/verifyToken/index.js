@@ -1,11 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-const { getToken } = require('../helpers/authService');
+const translationFile = require('./translation');
+const { getToken } = require('../../helpers/authService');
 
 const { SECRET_JWT } = process.env;
 
-const verifyToken = (request, response, next) => {
+module.exports = (request, response, next) => {
   const { authorization } = request.headers;
+  const { language } = request.body;
+  const translation = translationFile[language || 'pt-BR'];
 
   if (authorization) {
     try {
@@ -16,20 +19,18 @@ const verifyToken = (request, response, next) => {
 
       if (error.message === 'jwt expired')
         return response.status(401).json({
-          message: 'Esse token foi expirado.',
+          message: translation.expiredToken,
         });
 
       return response.status(401).json({
-        message: 'Token inválido ao decodifica-lo.',
+        message: translation.invalidDecodedToken,
       });
     }
   } else {
     return response.status(401).json({
-      message: 'Por favor insira o token no cabeçalho da requisição.',
+      message: translation.invalidHeaderToken,
     });
   }
 
   next();
 };
-
-module.exports = verifyToken;

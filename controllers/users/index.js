@@ -1,12 +1,14 @@
 const bcrypt = require('bcrypt');
 
-const { generateToken } = require('../helpers/authService');
-const model = require('../models/users');
+const translationFile = require('./translation');
+const { generateToken } = require('../../helpers/authService');
+const model = require('../../models/users');
 
 const edit = async (request, response) => {
   const { id } = request.params;
   const { name, email, phone, password, confirmPassword, language } =
     request.body;
+  const translation = translationFile[language || 'pt-BR'];
 
   try {
     const userExists = await model.findById(id);
@@ -14,12 +16,11 @@ const edit = async (request, response) => {
     let user = {};
 
     if (!userExists)
-      return response.status(400).json({ message: 'Usuário não existe' });
+      return response.status(400).json({ message: translation.userNotExists });
 
     if (userExists.email !== email && emailExists)
       return response.status(400).json({
-        message:
-          'Por favor, utilize outro e-mail que não foi cadastrado na plataforma.',
+        message: translation.emailExists,
       });
 
     if (password === confirmPassword && password !== null) {
@@ -35,40 +36,39 @@ const edit = async (request, response) => {
     user.language = language;
     await model.update(id, user);
 
-    return response
-      .status(200)
-      .json({ message: 'Usuário atualizado com sucesso!' });
+    return response.status(200).json({ message: translation.updateSuccess });
   } catch (error) {
     console.error(error);
     return response.status(500).json({
-      message: 'Houve algum erro no servidor ao atualizar o usuário.',
+      message: translation.errorServerUpdate,
       error: error.message,
     });
   }
 };
 
 const login = async (request, response) => {
-  const { email, password } = request.body;
+  const { email, password, language } = request.body;
+  const translation = translationFile[language || 'pt-BR'];
 
   try {
     const user = await model.findByEmail(email);
 
     if (!user)
       return response.status(400).json({
-        message: 'Não existe usuário cadastrado com esse e-mail.',
+        message: translation.notEmailSystem,
       });
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword)
       return response.status(400).json({
-        message: 'Senha inválida.',
+        message: translation.invalidPassword,
       });
 
     const token = generateToken(user);
 
     return response.status(200).json({
-      message: 'Autenticação realizada com sucesso!',
+      message: translation.authSuccess,
       token,
       data: {
         id: user.id,
@@ -81,22 +81,22 @@ const login = async (request, response) => {
   } catch (error) {
     console.error(error);
     return response.status(500).json({
-      message: 'Houve algum erro no servidor ao logar o usuário.',
+      message: translation.errorServerLogin,
       error: error.message,
     });
   }
 };
 
 const register = async (request, response) => {
-  const { email, password } = request.body;
+  const { email, password, language } = request.body;
+  const translation = translationFile[language || 'pt-BR'];
 
   try {
     const emailExists = await model.findByEmail(email);
 
     if (emailExists)
       return response.status(400).json({
-        message:
-          'Este e-mail já foi cadastrado, por favor utilize outro e-mail.',
+        message: translation.emailExists,
       });
 
     const salt = await bcrypt.genSalt(12);
@@ -111,14 +111,13 @@ const register = async (request, response) => {
     const token = generateToken(user);
 
     return response.status(200).json({
-      message: 'Autenticação realizada com sucesso!',
+      message: translation.authSuccess,
       token,
     });
   } catch (error) {
     console.error(error);
     return response.status(500).json({
-      message:
-        'Houve algum erro no servidor ao tentar cadastrar o usuário e realizar a sua respectiva autenticação.',
+      message: translation.errorServerRegister,
       error: error.message,
     });
   }
