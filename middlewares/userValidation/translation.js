@@ -5,10 +5,14 @@ module.exports = {
     phone: 'The field "phone" is required!',
     password: 'The field "password" is required!',
     confirmPassword: 'The field "confirm password" is required!',
-    invalidRangePassword:
-      'The password must be greater than 0 and less than 128 characters.',
+    language: 'The field "language" is required!',
     invalidComparePasswords:
       'Passwords must be the same! Double-check the password fields and confirm password.',
+    invalidEmail: 'Invalid email, please enter a valid email correctly.',
+    invalidPassword:
+      'Password must contain at least 8 characters, a number, a special character, an uppercase and lowercase letter.',
+    invalidPhone:
+      'Enter a valid phone number, for example +55 (00) 00000-0000.',
   },
   'pt-BR': {
     name: 'O campo "nome" é obrigatório!',
@@ -16,9 +20,13 @@ module.exports = {
     phone: 'O campo "telefone" é obrigatório!',
     password: 'O campo "senha" é obrigatório!',
     confirmPassword: 'O campo "confirmar senha" é obrigatório!',
-    invalidRangePassword:
-      'A senha deve ser maior que 0 e menor que 128 caracteres.',
+    language: 'O campo "linguagem" é obrigatório!',
     invalidComparePasswords:
       'As senhas devem ser iguais! Verifique novamente os campos de senha e confirmar senha.',
+    invalidEmail: 'E-mail inválido, insira um e-mail válido de forma correta.',
+    invalidPassword:
+      'Senha deve conter pelo menos 8 caracteres, um número, um caractere especial, uma letra maiúscula e minúscula.',
+    invalidPhone:
+      'Insira um telefone válido, por exemplo, +55 (00) 00000-0000.',
   },
 };

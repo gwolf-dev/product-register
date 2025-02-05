@@ -9,13 +9,13 @@ const {
 const model = require('../../models/users');
 const translation = require('./translation');
 
-const { SECRET_JWT_REFRESH_TOKEN } = process.env;
+const { SECRET_JWT_REFRESH_TOKEN, DEFAULT_LANGUAGE } = process.env;
 
 const edit = async (request, response) => {
   const { id } = request.params;
   const { name, email, phone, password, confirmPassword, language } =
     request.body;
-  const translation = translationFile[language || 'pt-BR'];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   try {
     const userExists = await model.findById(id);
@@ -55,7 +55,7 @@ const edit = async (request, response) => {
 
 const login = async (request, response) => {
   const { email, password, language } = request.body;
-  const translation = translationFile[language || 'pt-BR'];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   try {
     const user = await model.findByEmail(email);
@@ -97,8 +97,8 @@ const login = async (request, response) => {
 };
 
 const register = async (request, response) => {
-  const { email, password, language } = request.body;
-  const translation = translationFile[language || 'pt-BR'];
+  const { id, name, email, phone, password, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   try {
     const emailExists = await model.findByEmail(email);
@@ -123,11 +123,11 @@ const register = async (request, response) => {
     return response.status(200).json({
       message: translation.authSuccess,
       data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        language: user.language,
+        id,
+        name,
+        email,
+        phone,
+        language,
       },
       accessToken: token,
       refreshToken,

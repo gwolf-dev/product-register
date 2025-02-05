@@ -1,14 +1,12 @@
 const translationFile = require('./translation');
+const validate = require('../../helpers/validateFields');
+
+const { DEFAULT_LANGUAGE } = process.env;
 
 const validateEmptyFields = async (request, response, next) => {
   const { name, email, password, confirmPassword, phone, language } =
     request.body;
-
-  if (!language)
-    return response
-      .status(400)
-      .json({ message: 'The field "language" is required!' });
-  const translation = translationFile[language || 'pt-BR'];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   if (!name) return response.status(400).json({ message: translation.name });
 
@@ -22,22 +20,36 @@ const validateEmptyFields = async (request, response, next) => {
   if (!confirmPassword)
     return response.status(400).json({ message: translation.confirmPassword });
 
-  if (password.length < 0 || password.length > 128)
-    return response.status(400).json({
-      message: translation.invalidRangePassword,
-    });
-
   if (password !== confirmPassword)
     return response.status(400).json({
       message: translation.invalidComparePasswords,
     });
+
+  if (!language)
+    return response.status(400).json({ message: translation.language });
+
+  next();
+};
+
+const validateFields = (request, response, next) => {
+  const { email, password, phone, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  if (!validate.email(email))
+    return response.status(400).json({ message: translation.invalidEmail });
+
+  if (!validate.phone(phone))
+    return response.status(400).json({ message: translation.invalidPhone });
+
+  if (!validate.password(password))
+    return response.status(400).json({ message: translation.invalidPassword });
 
   next();
 };
 
 const validateLogin = (request, response, next) => {
   const { email, password, language } = request.body;
-  const translation = translationFile[language || 'pt-BR'];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   if (!email) return response.status(400).json({ message: translation.email });
 
@@ -47,4 +59,4 @@ const validateLogin = (request, response, next) => {
   next();
 };
 
-module.exports = { validateEmptyFields, validateLogin };
+module.exports = { validateEmptyFields, validateFields, validateLogin };

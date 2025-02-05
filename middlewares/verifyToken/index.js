@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 const translationFile = require('./translation');
 const { getToken } = require('../../helpers/authService');
 
-const { SECRET_JWT_TOKEN } = process.env;
+const { SECRET_JWT_TOKEN, DEFAULT_LANGUAGE } = process.env;
 
 module.exports = (request, response, next) => {
   const { authorization } = request.headers;
   const { language } = request.body;
-  const translation = translationFile[language || 'pt-BR'];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   if (authorization) {
     try {
