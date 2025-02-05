@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-const { SECRET_JWT } = process.env;
+const { SECRET_JWT_TOKEN, SECRET_JWT_REFRESH_TOKEN } = process.env;
 
-const generateToken = (data) => jwt.sign(data, SECRET_JWT, { expiresIn: '1d' });
+const generateToken = (data) =>
+  jwt.sign(data, SECRET_JWT_TOKEN, { expiresIn: '1d' });
+
+const generateRefreshToken = (data) =>
+  jwt.sign(data, SECRET_JWT_REFRESH_TOKEN, { expiresIn: '7d' });
 
 const getToken = (request) => {
   const { authorization } = request.headers;
@@ -13,4 +17,4 @@ const getToken = (request) => {
   return token;
 };
 
-module.exports = { generateToken, getToken };
+module.exports = { generateToken, generateRefreshToken, getToken };

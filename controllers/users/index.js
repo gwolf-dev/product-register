@@ -1,8 +1,15 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const translationFile = require('./translation');
-const { generateToken } = require('../../helpers/authService');
+const {
+  generateToken,
+  generateRefreshToken,
+} = require('../../helpers/authService');
 const model = require('../../models/users');
+const translation = require('./translation');
+
+const { SECRET_JWT_REFRESH_TOKEN } = process.env;
 
 const edit = async (request, response) => {
   const { id } = request.params;
@@ -66,10 +73,10 @@ const login = async (request, response) => {
       });
 
     const token = generateToken(user);
+    const refreshToken = generateRefreshToken(user);
 
     return response.status(200).json({
       message: translation.authSuccess,
-      token,
       data: {
         id: user.id,
         name: user.name,
@@ -77,6 +84,8 @@ const login = async (request, response) => {
         phone: user.phone,
         language: user.language,
       },
+      accessToken: token,
+      refreshToken,
     });
   } catch (error) {
     console.error(error);
@@ -109,10 +118,19 @@ const register = async (request, response) => {
     });
 
     const token = generateToken(user);
+    const refreshToken = generateRefreshToken(user);
 
     return response.status(200).json({
       message: translation.authSuccess,
-      token,
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        language: user.language,
+      },
+      accessToken: token,
+      refreshToken,
     });
   } catch (error) {
     console.error(error);
@@ -123,4 +141,31 @@ const register = async (request, response) => {
   }
 };
 
-module.exports = { edit, login, register };
+const refreshToken = (request, response) => {
+  const { refreshToken } = request.body;
+  if (!refreshToken)
+    return response.status(401).json({
+      message: translation.emptyRefreshToken,
+    });
+
+  try {
+    const { id, name, email, phone, language } = jwt.verify(
+      refreshToken,
+      SECRET_JWT_REFRESH_TOKEN,
+    );
+    const dataToken = { id, name, email, phone, language };
+    const token = generateToken(dataToken);
+
+    return response.status(200).json({
+      message: translation.successRefreshToken,
+      accessToken: token,
+    });
+  } catch (error) {
+    console.log(error);
+    return response.status(401).json({
+      message: translation.invalidRefreshToken,
+    });
+  }
+};
+
+module.exports = { edit, login, register, refreshToken };

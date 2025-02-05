@@ -13,6 +13,10 @@ module.exports = {
       'There was an error on the server when logging the user in.',
     errorServerRegister:
       'There was an error on the server when trying to register the user and perform their authentication.',
+    emptyRefreshToken: 'Refresh token is mandatory when sending the request.',
+    successRefreshToken:
+      'Creation of the new token, from the refresh, was successful!',
+    invalidRefreshToken: 'Invalid refresh token!',
   },
   'pt-BR': {
     userNotExists: 'Usuário não existe',
@@ -26,5 +30,9 @@ module.exports = {
     errorServerLogin: 'Houve algum erro no servidor ao logar o usuário.',
     errorServerRegister:
       'Houve algum erro no servidor ao tentar cadastrar o usuário e realizar a sua respectiva autenticação.',
+    emptyRefreshToken: 'Refresh token é obrigatório no envio da requisição.',
+    successRefreshToken:
+      'Criação do novo token, a partir do refresh, foi bem sucedido!',
+    invalidRefreshToken: 'Refresh token inválido!',
   },
 };

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const translationFile = require('./translation');
 const { getToken } = require('../../helpers/authService');
 
-const { SECRET_JWT } = process.env;
+const { SECRET_JWT_TOKEN } = process.env;
 
 module.exports = (request, response, next) => {
   const { authorization } = request.headers;
@@ -13,7 +13,7 @@ module.exports = (request, response, next) => {
   if (authorization) {
     try {
       const token = getToken(request);
-      jwt.verify(token, SECRET_JWT);
+      jwt.verify(token, SECRET_JWT_TOKEN);
     } catch (error) {
       console.error(error);
 

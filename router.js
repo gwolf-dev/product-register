@@ -12,6 +12,7 @@ router.post(
   userValidation.validateEmptyFields,
   users.register,
 );
+router.post('/users/refreshToken', users.refreshToken);
 router.patch(
   '/users/edit/:id',
   verifyToken,
