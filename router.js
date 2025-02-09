@@ -31,5 +31,11 @@ router.patch(
 
 /* --- Companies --- */
 router.post('/companies', verifyLanguage, verifyToken, companies.getAll);
+router.post(
+  '/companies/:companyId',
+  verifyLanguage,
+  verifyToken,
+  companies.get,
+);
 
 module.exports = router;

@@ -30,4 +30,31 @@ const getAll = async (request, response) => {
   }
 };
 
-module.exports = { getAll };
+const get = async (request, response) => {
+  const { companyId } = request.params;
+  const { language } = request.body;
+  const token = request.headers.authorization.split(' ')[1];
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+  const decodedToken = jwt.verify(token, SECRET_JWT_TOKEN);
+
+  try {
+    const company = await model.findByCompanyId(decodedToken.id, companyId);
+
+    if (!company)
+      return response
+        .status(200)
+        .json({ message: translation.emptyFindCompany, company: {} });
+
+    return response
+      .status(200)
+      .json({ message: translation.successFindCompany, company });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerFindCompany,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get };

@@ -8,6 +8,15 @@ const findAll = async (userId) => {
   return companies;
 };
 
+const findByCompanyId = async (userId, companyId) => {
+  const query = 'SELECT * FROM companies WHERE userId = ? AND id = ?;';
+
+  const [company] = await connection.execute(query, [userId, companyId]);
+
+  return company[0];
+};
+
 module.exports = {
   findAll,
+  findByCompanyId,
 };
