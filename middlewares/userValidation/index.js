@@ -3,7 +3,7 @@ const validate = require('../../helpers/validateFields');
 
 const { DEFAULT_LANGUAGE } = process.env;
 
-const validateEmptyFields = async (request, response, next) => {
+const validateEmptyFields = (request, response, next) => {
   const { name, email, password, confirmPassword, phone, language } =
     request.body;
   const translation = translationFile[language || DEFAULT_LANGUAGE];
@@ -24,6 +24,17 @@ const validateEmptyFields = async (request, response, next) => {
     return response.status(400).json({
       message: translation.invalidComparePasswords,
     });
+
+  if (
+    typeof name !== 'string' ||
+    typeof email !== 'string' ||
+    typeof phone !== 'string' ||
+    typeof password !== 'string' ||
+    typeof confirmPassword !== 'string'
+  )
+    return response
+      .status(400)
+      .json({ message: translation.invalidTypeString });
 
   next();
 };

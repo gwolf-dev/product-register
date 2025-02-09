@@ -57,4 +57,42 @@ const get = async (request, response) => {
   }
 };
 
-module.exports = { getAll, get };
+const register = async (request, response) => {
+  const { userId, name, address, phone, foundation, department, language } =
+    request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  try {
+    const userExists = await model.findUserById(userId);
+    if (!userExists)
+      return response.status(400).json({ message: translation.userNotExists });
+
+    const companyExists = await model.findByCompanyName(userId, name);
+    if (companyExists)
+      return response
+        .status(400)
+        .json({ message: translation.companyAlreadyExists });
+
+    const { insertId } = await model.register({
+      userId,
+      name,
+      address,
+      phone,
+      foundation,
+      department,
+    });
+    const company = await model.findByCompanyId(userId, insertId);
+
+    return response.status(200).json({
+      message: translation.successRegister.replace('{name}', company.name),
+      data: company,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: translation.errorServerRegisterCompany,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get, register };

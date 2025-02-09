@@ -3,6 +3,6 @@ module.exports = {
     language: 'The field "language" is required!',
   },
   'pt-BR': {
-    language: 'O campo "linguagem" é obrigatório!',
+    language: 'O campo "language" é obrigatório!',
   },
 };

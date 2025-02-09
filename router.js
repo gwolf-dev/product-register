@@ -3,6 +3,7 @@ const express = require('express');
 const { companies, users } = require('./controllers');
 
 const {
+  companyValidation,
   userValidation,
   verifyToken,
   verifyLanguage,
@@ -30,12 +31,19 @@ router.patch(
 );
 
 /* --- Companies --- */
-router.post('/companies', verifyLanguage, verifyToken, companies.getAll);
+router.post('/companies/get', verifyLanguage, verifyToken, companies.getAll);
 router.post(
-  '/companies/:companyId',
+  '/companies/get/:companyId',
   verifyLanguage,
   verifyToken,
   companies.get,
+);
+router.post(
+  '/companies',
+  verifyLanguage,
+  verifyToken,
+  companyValidation.validateEmptyFields,
+  companies.register,
 );
 
 module.exports = router;
