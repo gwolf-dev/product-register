@@ -1,8 +1,12 @@
 const express = require('express');
 
-const { users } = require('./controllers');
+const { companies, users } = require('./controllers');
 
-const { userValidation, verifyToken } = require('./middlewares');
+const {
+  userValidation,
+  verifyToken,
+  verifyLanguage,
+} = require('./middlewares');
 
 const router = express.Router();
 
@@ -10,6 +14,7 @@ const router = express.Router();
 router.post('/users/login', userValidation.validateLogin, users.login);
 router.post(
   '/users/register',
+  verifyLanguage,
   userValidation.validateEmptyFields,
   userValidation.validateFields,
   users.register,
@@ -17,6 +22,7 @@ router.post(
 router.post('/users/refreshToken', users.refreshToken);
 router.patch(
   '/users/edit/:id',
+  verifyLanguage,
   verifyToken,
   userValidation.validateEmptyFields,
   userValidation.validateFields,
@@ -24,5 +30,6 @@ router.patch(
 );
 
 /* --- Companies --- */
+router.post('/companies', verifyLanguage, verifyToken, companies.getAll);
 
 module.exports = router;

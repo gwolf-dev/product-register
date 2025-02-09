@@ -25,9 +25,6 @@ const validateEmptyFields = async (request, response, next) => {
       message: translation.invalidComparePasswords,
     });
 
-  if (!language)
-    return response.status(400).json({ message: translation.language });
-
   next();
 };
 

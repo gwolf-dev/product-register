@@ -5,7 +5,6 @@ module.exports = {
     phone: 'The field "phone" is required!',
     password: 'The field "password" is required!',
     confirmPassword: 'The field "confirm password" is required!',
-    language: 'The field "language" is required!',
     invalidComparePasswords:
       'Passwords must be the same! Double-check the password fields and confirm password.',
     invalidEmail: 'Invalid email, please enter a valid email correctly.',
@@ -20,7 +19,6 @@ module.exports = {
     phone: 'O campo "telefone" é obrigatório!',
     password: 'O campo "senha" é obrigatório!',
     confirmPassword: 'O campo "confirmar senha" é obrigatório!',
-    language: 'O campo "linguagem" é obrigatório!',
     invalidComparePasswords:
       'As senhas devem ser iguais! Verifique novamente os campos de senha e confirmar senha.',
     invalidEmail: 'E-mail inválido, insira um e-mail válido de forma correta.',

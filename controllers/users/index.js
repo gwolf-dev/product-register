@@ -111,24 +111,19 @@ const register = async (request, response) => {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const user = await model.register({
+    await model.register({
       ...request.body,
       email,
       password: passwordHash,
     });
 
-    const token = generateToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const userToken = { id, name, email, phone, language };
+    const token = generateToken(userToken);
+    const refreshToken = generateRefreshToken(userToken);
 
     return response.status(200).json({
       message: translation.authSuccess,
-      data: {
-        id,
-        name,
-        email,
-        phone,
-        language,
-      },
+      data: userToken,
       accessToken: token,
       refreshToken,
     });
