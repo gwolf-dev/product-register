@@ -88,6 +88,7 @@ const register = async (request, response) => {
       data: company,
     });
   } catch (error) {
+    console.error(error);
     return response.status(500).json({
       message: translation.errorServerRegisterCompany,
       error: error.message,
@@ -134,6 +135,7 @@ const edit = async (request, response) => {
       },
     });
   } catch (error) {
+    console.error(error);
     return response.status(500).json({
       message: translation.errorServerUpdateCompany,
       error: error.message,
@@ -141,4 +143,28 @@ const edit = async (request, response) => {
   }
 };
 
-module.exports = { getAll, get, register, edit };
+const deleteCompany = async (request, response) => {
+  const { companyId } = request.params;
+  const { userId, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  try {
+    const companyExists = await model.findByCompanyId(userId, companyId);
+    if (!companyExists)
+      return response
+        .status(400)
+        .json({ message: translation.companyNotExists });
+
+    await model.delete(userId, Number(companyId));
+
+    return response.status(204).json({});
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerDeleteCompany,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get, register, edit, delete: deleteCompany };

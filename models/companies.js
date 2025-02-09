@@ -66,6 +66,14 @@ const update = async (companyId, parameters) => {
   return updatedUser;
 };
 
+const deleteCompany = async (userId, companyId) => {
+  const query = 'DELETE FROM companies WHERE userId = ? AND id = ?;';
+
+  const [updatedUser] = await connection.execute(query, [userId, companyId]);
+
+  return updatedUser;
+};
+
 module.exports = {
   findAll,
   findByCompanyId,
@@ -73,4 +81,5 @@ module.exports = {
   findByCompanyName,
   register,
   update,
+  delete: deleteCompany,
 };

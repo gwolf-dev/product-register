@@ -23,7 +23,7 @@ router.post(
 );
 router.post('/users/refreshToken', users.refreshToken);
 router.patch(
-  '/users/edit/:id',
+  '/users/:id',
   verifyLanguage,
   verifyToken,
   userValidation.validateEmptyFields,
@@ -48,12 +48,19 @@ router.post(
   companies.register,
 );
 router.put(
-  '/companies/edit/:companyId',
+  '/companies/:companyId',
   verifyLanguage,
   verifyToken,
   companyValidation.validateEmptyFields,
   verifyUserId,
   companies.edit,
+);
+router.delete(
+  '/companies/:companyId',
+  verifyLanguage,
+  verifyToken,
+  verifyUserId,
+  companies.delete,
 );
 
 module.exports = router;

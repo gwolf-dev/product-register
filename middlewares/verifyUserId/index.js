@@ -10,6 +10,16 @@ module.exports = (request, response, next) => {
   const { userId, language } = request.body;
   const translation = translationFile[language || DEFAULT_LANGUAGE];
 
+  if (!userId)
+    return response.status(400).json({
+      message: translation.userId,
+    });
+
+  if (typeof userId !== 'number')
+    return response.status(400).json({
+      message: translation.userIdInvalidType,
+    });
+
   if (authorization) {
     try {
       const token = getToken(request);

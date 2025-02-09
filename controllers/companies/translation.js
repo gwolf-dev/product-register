@@ -18,6 +18,8 @@ module.exports = {
     successUpdate: 'Actualization of company {name} successfully completed!',
     errorServerUpdateCompany:
       'There was a server error when updating the company',
+    errorServerDeleteCompany:
+      'There was an error on the server to delete the selected company.',
   },
   'pt-BR': {
     emptyFindCompanies: 'Não há empresas cadastradas para esse usuário.',
@@ -38,5 +40,7 @@ module.exports = {
     successUpdate: 'Atualização da empresa {name} realizada com sucesso!',
     errorServerUpdateCompany:
       'Houve algum erro no servidor na atualização da empresa',
+    errorServerDeleteCompany:
+      'Houve algum erro no servidor para deletar a empresa selecionada.',
   },
 };
