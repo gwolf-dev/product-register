@@ -97,7 +97,7 @@ const login = async (request, response) => {
 };
 
 const register = async (request, response) => {
-  const { id, name, email, phone, password, language } = request.body;
+  const { name, email, phone, password, language } = request.body;
   const translation = translationFile[language || DEFAULT_LANGUAGE];
 
   try {
@@ -111,13 +111,13 @@ const register = async (request, response) => {
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    await model.register({
+    const { insertId } = await model.register({
       ...request.body,
       email,
       password: passwordHash,
     });
 
-    const userToken = { id, name, email, phone, language };
+    const userToken = { id: insertId, name, email, phone, language };
     const token = generateToken(userToken);
     const refreshToken = generateRefreshToken(userToken);
 

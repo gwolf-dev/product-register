@@ -14,6 +14,10 @@ module.exports = {
       'User does not exist, please register the user through the platform to link with this company.',
     companyAlreadyExists: 'This company is already registered with this user.',
     successRegister: 'Registration of company {name} successfully completed!',
+    companyNotExists: 'Company does not exist!',
+    successUpdate: 'Actualization of company {name} successfully completed!',
+    errorServerUpdateCompany:
+      'There was a server error when updating the company',
   },
   'pt-BR': {
     emptyFindCompanies: 'Não há empresas cadastradas para esse usuário.',
@@ -30,5 +34,9 @@ module.exports = {
       'Usuário não existe, por favor, cadastre o usuário pela plataforma para fazer o vínculo com essa empresa.',
     companyAlreadyExists: 'Esta empresa já está cadastrada com esse usuário.',
     successRegister: 'Cadastro da empresa {name} realizada com sucesso!',
+    companyNotExists: 'Empresa não existe!',
+    successUpdate: 'Atualização da empresa {name} realizada com sucesso!',
+    errorServerUpdateCompany:
+      'Houve algum erro no servidor na atualização da empresa',
   },
 };

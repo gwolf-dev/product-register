@@ -7,6 +7,7 @@ const {
   userValidation,
   verifyToken,
   verifyLanguage,
+  verifyUserId,
 } = require('./middlewares');
 
 const router = express.Router();
@@ -43,7 +44,16 @@ router.post(
   verifyLanguage,
   verifyToken,
   companyValidation.validateEmptyFields,
+  verifyUserId,
   companies.register,
+);
+router.put(
+  '/companies/edit/:companyId',
+  verifyLanguage,
+  verifyToken,
+  companyValidation.validateEmptyFields,
+  verifyUserId,
+  companies.edit,
 );
 
 module.exports = router;

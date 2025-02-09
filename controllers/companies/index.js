@@ -95,4 +95,50 @@ const register = async (request, response) => {
   }
 };
 
-module.exports = { getAll, get, register };
+const edit = async (request, response) => {
+  const { companyId } = request.params;
+  const { userId, name, address, phone, foundation, department, language } =
+    request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  try {
+    const userExists = await model.findUserById(userId);
+    if (!userExists)
+      return response.status(400).json({ message: translation.userNotExists });
+
+    const companyExists = await model.findByCompanyId(userId, companyId);
+    if (!companyExists)
+      return response
+        .status(400)
+        .json({ message: translation.companyNotExists });
+
+    await model.update(companyId, {
+      userId,
+      name,
+      address,
+      phone,
+      foundation,
+      department,
+    });
+
+    return response.status(200).json({
+      message: translation.successUpdate.replace('{name}', name),
+      data: {
+        id: Number(companyId),
+        userId,
+        name,
+        address,
+        phone,
+        foundation,
+        department,
+      },
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: translation.errorServerUpdateCompany,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get, register, edit };

@@ -49,10 +49,28 @@ const register = async (parameters) => {
   return { insertId: user.insertId };
 };
 
+const update = async (companyId, parameters) => {
+  const { userId, name, address, phone, foundation, department } = parameters;
+  const query =
+    'UPDATE companies SET userId = ?, name = ?, address = ?, phone = ?, foundation = ?, department = ? WHERE id = ?';
+
+  const [updatedUser] = await connection.execute(query, [
+    userId,
+    name,
+    address,
+    phone,
+    foundation,
+    department,
+    companyId,
+  ]);
+  return updatedUser;
+};
+
 module.exports = {
   findAll,
   findByCompanyId,
   findUserById,
   findByCompanyName,
   register,
+  update,
 };
