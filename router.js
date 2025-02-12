@@ -1,9 +1,10 @@
 const express = require('express');
 
-const { companies, users } = require('./controllers');
+const { companies, products, users } = require('./controllers');
 
 const {
   companyValidation,
+  productsValidation,
   userValidation,
   verifyToken,
   verifyLanguage,
@@ -30,7 +31,6 @@ router.patch(
   userValidation.validateFields,
   users.edit,
 );
-
 /* --- Companies --- */
 router.post('/companies/get', verifyLanguage, verifyToken, companies.getAll);
 router.post(
@@ -61,6 +61,14 @@ router.delete(
   verifyToken,
   verifyUserId,
   companies.delete,
+);
+/* --- Products --- */
+router.post(
+  '/products/get',
+  verifyLanguage,
+  verifyToken,
+  productsValidation.validateCopanyId,
+  products.getAll,
 );
 
 module.exports = router;
