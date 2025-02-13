@@ -34,4 +34,34 @@ const getAll = async (request, response) => {
   }
 };
 
-module.exports = { getAll };
+const get = async (request, response) => {
+  const { productId } = request.params;
+  const { language, companyId } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+  const token = request.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, SECRET_JWT_TOKEN);
+
+  try {
+    const product = await model.findById(decodedToken.id, productId, companyId);
+
+    if (!product)
+      return response
+        .status(200)
+        .json({ message: translation.emptyFindProduct, product: {} });
+
+    return response
+      .status(200)
+      .json({
+        message: translation.successFindProduct,
+        product: { ...product, price: Number(product.price.toFixed(2)) },
+      });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerFindProduct,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get };

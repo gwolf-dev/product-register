@@ -2,7 +2,7 @@ const translationFile = require('./translation');
 
 const { DEFAULT_LANGUAGE } = process.env;
 
-const validateCopanyId = (request, response, next) => {
+const validateCompanyId = (request, response, next) => {
   const { companyId, language } = request.body;
   const translation = translationFile[language || DEFAULT_LANGUAGE];
 
@@ -12,4 +12,4 @@ const validateCopanyId = (request, response, next) => {
   next();
 };
 
-module.exports = { validateCopanyId };
+module.exports = { validateCompanyId };

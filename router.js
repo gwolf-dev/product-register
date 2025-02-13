@@ -67,8 +67,16 @@ router.post(
   '/products/get',
   verifyLanguage,
   verifyToken,
-  productsValidation.validateCopanyId,
+  productsValidation.validateCompanyId,
   products.getAll,
+);
+
+router.post(
+  '/products/get/:productId',
+  verifyLanguage,
+  verifyToken,
+  productsValidation.validateCompanyId,
+  products.get,
 );
 
 module.exports = router;
