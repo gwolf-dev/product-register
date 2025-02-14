@@ -70,13 +70,21 @@ router.post(
   productsValidation.validateCompanyId,
   products.getAll,
 );
-
 router.post(
   '/products/get/:productId',
   verifyLanguage,
   verifyToken,
   productsValidation.validateCompanyId,
   products.get,
+);
+
+router.post(
+  '/products',
+  verifyLanguage,
+  verifyToken,
+  productsValidation.validateEmptyFields,
+  productsValidation.validateFields,
+  products.register,
 );
 
 module.exports = router;

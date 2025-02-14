@@ -49,12 +49,10 @@ const get = async (request, response) => {
         .status(200)
         .json({ message: translation.emptyFindProduct, product: {} });
 
-    return response
-      .status(200)
-      .json({
-        message: translation.successFindProduct,
-        product: { ...product, price: Number(product.price.toFixed(2)) },
-      });
+    return response.status(200).json({
+      message: translation.successFindProduct,
+      product: { ...product, price: Number(product.price.toFixed(2)) },
+    });
   } catch (error) {
     console.error(error);
     return response.status(500).json({
@@ -64,4 +62,51 @@ const get = async (request, response) => {
   }
 };
 
-module.exports = { getAll, get };
+const register = async (request, response) => {
+  const { userId, companyId, name, price, barcode, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  try {
+    const userExists = await model.findUserById(userId);
+    if (!userExists)
+      return response.status(400).json({ message: translation.userNotExists });
+
+    const companyExists = await model.findCompanyById(companyId, userId);
+    if (!companyExists)
+      return response
+        .status(400)
+        .json({ message: translation.companyNotExists });
+
+    const productExists = await model.findByProductName(
+      userId,
+      companyId,
+      name,
+    );
+    if (productExists)
+      return response
+        .status(400)
+        .json({ message: translation.productAlreadyExists });
+
+    const { insertId } = await model.register({
+      userId,
+      companyId,
+      name,
+      price,
+      barcode,
+    });
+    const product = await model.findByProductId(userId, companyId, insertId);
+
+    return response.status(200).json({
+      message: translation.successProduct.replace('{name}', product.name),
+      data: { ...product, price: Number(product.price.toFixed(2)) },
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerRegisterProduct,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get, register };
