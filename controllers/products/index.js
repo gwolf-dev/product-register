@@ -109,4 +109,85 @@ const register = async (request, response) => {
   }
 };
 
-module.exports = { getAll, get, register };
+const edit = async (request, response) => {
+  const { productId } = request.params;
+  const { companyId, name, price, barcode, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+  const token = request.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, SECRET_JWT_TOKEN);
+
+  try {
+    const userExists = await model.findUserById(decodedToken.id);
+    if (!userExists)
+      return response.status(400).json({ message: translation.userNotExists });
+
+    const companyExists = await model.findCompanyById(
+      companyId,
+      decodedToken.id,
+    );
+    if (!companyExists)
+      return response
+        .status(400)
+        .json({ message: translation.companyNotExists });
+
+    const productExists = await model.findByProductName(
+      decodedToken.id,
+      companyId,
+      name,
+    );
+    if (productExists)
+      return response
+        .status(400)
+        .json({ message: translation.productAlreadyExists });
+
+    await model.update(productId, companyId, decodedToken.id, {
+      name,
+      price,
+      barcode,
+    });
+
+    return response.status(200).json({
+      message: translation.successUpdate.replace('{name}', name),
+      data: {
+        id: Number(productId),
+        userId: decodedToken.id,
+        companyId,
+        name,
+        price,
+        barcode,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerUpdateProduct,
+      error: error.message,
+    });
+  }
+};
+
+const deleteProduct = async (request, response) => {
+  const { productId } = request.params;
+  const { userId, companyId, language } = request.body;
+  const translation = translationFile[language || DEFAULT_LANGUAGE];
+
+  try {
+    const productExists = await model.findById(userId, productId, companyId);
+    if (!productExists)
+      return response
+        .status(400)
+        .json({ message: translation.productNotExists });
+
+    await model.delete(Number(userId), Number(productId), Number(companyId));
+
+    return response.status(204).json({});
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({
+      message: translation.errorServerDeleteProduct,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getAll, get, register, edit, delete: deleteProduct };

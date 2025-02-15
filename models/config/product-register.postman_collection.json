@@ -1,0 +1,448 @@
+{
+	"info": {
+		"_postman_id": "5210e5da-d7be-403b-8a35-b75860b1b39f",
+		"name": "product-register",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40755226"
+	},
+	"item": [
+		{
+			"name": "/users/register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Gabriel Wolf\",\r\n    \"email\": \"gw@gmail.com\",\r\n    \"phone\": \"+55 (22) 22222-2222\",\r\n    \"language\": \"en-US\",\r\n    \"password\": \"Hs!234dsA\",\r\n    \"confirmPassword\": \"Hs!234dsA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/register",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"gw@gmail.com\",\r\n    \"password\": \"Hs!234dsA\",\r\n    \"language\": \"pt-BR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/refreshToken",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkdhYnJpZWwgV29sZiIsImVtYWlsIjoiZ3dAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkUDA3T1o1T0dXTWJzSkJDaTNzNURNT3l3UjBDRk1RbnBuRFgzZ0ozRFl6WWxlWFFZcUVXQ2EiLCJwaG9uZSI6Iis1NSAoMjIpIDIyMjIyLTIyMjIiLCJsYW5ndWFnZSI6ImVuLVVTIiwiaWF0IjoxNzM5NjQ2NTg2LCJleHAiOjE3NDAyNTEzODZ9.6YHf2-fH7DmAqgCReTdFYwisOD6bMO3XPSlbqL5iu3A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/refreshToken",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"refreshToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/:id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Gabriel\",\r\n    \"email\": \"gabriel.contato@gmail.com\",\r\n    \"phone\": \"+55 (00) 00000-0000\",\r\n    \"language\": \"pt-BR\",\r\n    \"password\": \"1234!Gga\",\r\n    \"confirmPassword\": \"1234!Gga\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/companies/get",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/companies/get",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"companies",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/companies/get/:companyId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/companies/get/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"companies",
+						"get",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/companies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\",\r\n    \"userId\": 1,\r\n    \"name\": \"Alimentos Gourmet\",\r\n    \"address\": \"Rua das Quitandas, 101, Jardim Bela Vista, Curitiba, PR\",\r\n    \"phone\": \"(41) 3345-8765\",\r\n    \"foundation\": 2005,\r\n    \"department\": \"Alimentos e Bebidas Gourmet\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/companies",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/companies/:companyId",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"en-US\",\r\n    \"userId\": 1,\r\n    \"name\": \"Alimentos Gourmet\",\r\n    \"address\": \"Avenida Verde, 220, Centro, Rio de Janeiro, RJ\",\r\n    \"phone\": \"(21) 9876-5432\",\r\n    \"foundation\": 2015,\r\n    \"department\": \"Alimentos e Bebidas Gourmet\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/companies/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/companies/companyId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"en-US\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/companies/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/get",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\",\r\n    \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/products/get",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"products",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/get/:productId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\",\r\n    \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/products/get/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"products",
+						"get",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\",\r\n    \"userId\": 1,\r\n    \"companyId\": 1,\r\n    \"name\": \"Produto de teste 2\",\r\n    \"price\": 59.90,\r\n    \"barcode\": \"2309875419845\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/products",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/:productId",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"pt-BR\",\r\n    \"userId\": 1,\r\n    \"companyId\": 1,\r\n    \"name\": \"Produto de teste 2 editado\",\r\n    \"price\": 80.90,\r\n    \"barcode\": \"3232890987654\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/products/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/:productId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"en-US\",\r\n    \"userId\": 1,\r\n    \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/products/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkdhYnJpZWwgV29sZiIsImVtYWlsIjoiZ3dAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkUDA3T1o1T0dXTWJzSkJDaTNzNURNT3l3UjBDRk1RbnBuRFgzZ0ozRFl6WWxlWFFZcUVXQ2EiLCJwaG9uZSI6Iis1NSAoMjIpIDIyMjIyLTIyMjIiLCJsYW5ndWFnZSI6ImVuLVVTIiwiaWF0IjoxNzM5NjQ2NTg2LCJleHAiOjE3Mzk3MzI5ODZ9.l0TS5IiTS9WzS118ts0X1mCrEJjdeeVXEsDF_AjdsyI",
+			"type": "string"
+		},
+		{
+			"key": "URL",
+			"value": "http://localhost:5001",
+			"type": "string"
+		}
+	]
+}

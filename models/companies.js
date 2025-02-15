@@ -69,9 +69,9 @@ const update = async (companyId, parameters) => {
 const deleteCompany = async (userId, companyId) => {
   const query = 'DELETE FROM companies WHERE userId = ? AND id = ?;';
 
-  const [updatedUser] = await connection.execute(query, [userId, companyId]);
+  const [deletedUser] = await connection.execute(query, [userId, companyId]);
 
-  return updatedUser;
+  return deletedUser;
 };
 
 module.exports = {

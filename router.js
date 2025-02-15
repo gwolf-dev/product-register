@@ -86,5 +86,21 @@ router.post(
   productsValidation.validateFields,
   products.register,
 );
+router.put(
+  '/products/:productId',
+  verifyLanguage,
+  verifyToken,
+  productsValidation.validateEmptyFields,
+  productsValidation.validateFields,
+  products.edit,
+);
+router.delete(
+  '/products/:productId',
+  verifyLanguage,
+  verifyToken,
+  verifyUserId,
+  productsValidation.validateCompanyId,
+  products.delete,
+);
 
 module.exports = router;

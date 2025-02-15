@@ -75,6 +75,35 @@ const register = async (parameters) => {
   return { insertId: product.insertId };
 };
 
+const update = async (productId, companyId, userId, parameters) => {
+  const { name, price, barcode } = parameters;
+  const query =
+    'UPDATE products SET name = ?, price = ?, barcode = ? WHERE id = ? AND companyId = ? AND userId = ?;';
+
+  const [updatedUser] = await connection.execute(query, [
+    name,
+    price,
+    barcode,
+    productId,
+    companyId,
+    userId,
+  ]);
+  return updatedUser;
+};
+
+const deleteCompany = async (userId, productId, companyId) => {
+  const query =
+    'DELETE FROM products WHERE id = ? AND userId = ? AND companyId = ?;';
+
+  const [deletedUser] = await connection.execute(query, [
+    productId,
+    userId,
+    companyId,
+  ]);
+
+  return deletedUser;
+};
+
 module.exports = {
   findAll,
   findById,
@@ -83,4 +112,6 @@ module.exports = {
   findByProductName,
   findByProductId,
   register,
+  update,
+  delete: deleteCompany,
 };

@@ -19,6 +19,12 @@ module.exports = {
     successProduct: 'Product {name} registration completed successfully!',
     errorServerRegisterProduct:
       'There was a server error while registering the product',
+    successUpdate: 'Product {name} update completed successfully!',
+    errorServerUpdateProduct:
+      'There was a server error while updating the product.',
+    productNotExists: 'Product not exists.',
+    errorServerDeleteProduct:
+      'There was an error on the server deleting the selected product.',
   },
   'pt-BR': {
     errorServerFindProducts:
@@ -40,5 +46,11 @@ module.exports = {
     successProduct: 'Cadastro do produto {name} realizado com sucesso!',
     errorServerRegisterProduct:
       'Houve algum erro no servidor no registro do produto',
+    successUpdate: 'Atualização do produto {name} realizado com sucesso!',
+    errorServerUpdateProduct:
+      'Houve algum erro no servidor na atualização do produto.',
+    productNotExists: 'O produto não existe.',
+    errorServerDeleteProduct:
+      'Houve algum erro no servidor para deletar o produto selecionado.',
   },
 };
